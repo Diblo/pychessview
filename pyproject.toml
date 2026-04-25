@@ -1,0 +1,107 @@
+[project]
+name = "pychessview"
+version = "0.1.1"
+description = "Interactive chessboard view library with optional Qt widget."
+keywords = ["chess", "qt", "pyside6", "board", "gui"]
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.11"
+authors = [{ name = "Diblo", email = "noreply@diblo.dk" }]
+dependencies = ["PyYAML>=6.0", "chess~=1.11.2", "imagesize>=2.0.0"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Games/Entertainment :: Board Games",
+    "Typing :: Typed",
+    "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+qt = ["PySide6>=6.7"]
+dev = [
+    "pre-commit~=4.5",
+    "pytest~=8.4",
+    "ruff>=0.14",
+    "pyright>=1.1",
+    "build~=1.4.4",
+    "twine~=6.2",
+    "argcomplete~=3.6.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/Diblo/pychessview"
+Repository = "https://github.com/Diblo/pychessview"
+Documentation = "https://github.com/Diblo/pychessview/blob/main/README.md"
+Issues = "https://github.com/Diblo/pychessview/issues"
+Changelog = "https://github.com/Diblo/pychessview/blob/main/CHANGELOG.md"
+
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["pychessview*"]
+
+[tool.setuptools.package-data]
+pychessview = [
+    "py.typed",
+    "assets/**/*.svg",
+    "assets/**/*.ttf",
+    "assets/**/*.yaml",
+]
+
+[tool.black]
+line-length = 120
+skip-magic-trailing-comma = true
+target-version = ["py311"]
+extend-exclude = '''
+(
+    (^|/)(dist|build|node_modules|__pycache__)(/|$)
+  | (^|/)\.[^/]+(/|$)
+)
+'''
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+src = ["src"]
+fix = true
+exclude = ["dist", "build", "node_modules", "__pycache__", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+fixable = ["ALL"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "unit: unit tests",
+    "integration: integration tests",
+    "qt_integration: Qt integration tests",
+    "requires_qt: tests that require PySide6",
+    "requires_python_chess: tests that require the chess package",
+    "requires_imagesize: tests that require the imagesize package",
+]
+
+[tool.pyright]
+exclude = [
+    "**/dist",
+    "**/build",
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.*/**",
+    "**/.*",
+    ".venv",
+]
+include = ["src", "tests", "examples", "tools"]
+extraPaths = ["src"]
+typeCheckingMode = "strict"
