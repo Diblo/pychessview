@@ -1,0 +1,58 @@
+exclude: (^|/)(dist|build|node_modules|__pycache__)(/|$)
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+        args: [ "--fix=lf" ]
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.22.1
+    hooks:
+      - id: markdownlint-cli2
+        args: [ "--fix", "--config", ".markdownlint.yaml" ]
+        types: [ markdown ]
+
+  - repo: local
+    hooks:
+      - id: fix-docstrings
+        name: fix-docstrings
+        entry: python -m tools.fix_docstrings
+        language: python
+        types: [ python ]
+
+      - id: pyright
+        name: pyright
+        entry: python -m tools.devtools run pyright
+        language: system
+        types: [python]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.11
+    hooks:
+      - id: ruff-check
+        args: [ "--fix" ]
+        types: [ python ]
+      - id: ruff-format
+        types: [ python ]
+
+  - repo: https://github.com/Jarmos-san/shellcheck-precommit
+    rev: v0.2.0
+    hooks:
+      - id: shellcheck-system
+        files: \.(sh|bash)$
+
+  - repo: https://github.com/thetestlabs/py-psscriptanalyzer
+    rev: v0.3.1
+    hooks:
+      - id: py-psscriptanalyzer
+        files: \.(ps1|psm1|psd1)$
+      - id: py-psscriptanalyzer-format
+        files: \.(ps1|psm1|psd1)$

@@ -1,0 +1,153 @@
+fill:
+  r: 1
+  g: 2
+  b: 3
+board:
+  fill:
+    r: 4
+    g: 5
+    b: 6
+  border:
+    factor: 0.05
+  square:
+    light:
+      file: square.svg
+    dark:
+      file: square.svg
+  label:
+    border:
+      fill:
+        r: 7
+        g: 8
+        b: 9
+      font: font.ttf
+      margin:
+        factor: 0.1
+    square:
+      light:
+        fill:
+          r: 10
+          g: 11
+          b: 12
+      dark:
+        fill:
+          r: 13
+          g: 14
+          b: 15
+      font: font.ttf
+      factor: 0.6
+      margin:
+        factor: 0.1
+piece:
+  factor: 0.9
+  drag:
+    factor: 1.2
+  white:
+    pawn:
+      file: square.svg
+    knight:
+      file: square.svg
+    bishop:
+      file: square.svg
+    rook:
+      file: square.svg
+    queen:
+      file: square.svg
+    king:
+      file: square.svg
+  black:
+    pawn:
+      file: square.svg
+    knight:
+      file: square.svg
+    bishop:
+      file: square.svg
+    rook:
+      file: square.svg
+    queen:
+      file: square.svg
+    king:
+      file: square.svg
+highlight:
+  last_move:
+    file: square.svg
+  selected:
+    file: square.svg
+  opponent_selected:
+    file: square.svg
+  hint:
+    file: square.svg
+  pseudo_hint:
+    file: square.svg
+  opponent_hint:
+    file: square.svg
+  opponent_pseudo_hint:
+    file: square.svg
+  hint_occupied:
+    file: square.svg
+  pseudo_hint_occupied:
+    file: square.svg
+  opponent_hint_occupied:
+    file: square.svg
+  opponent_pseudo_hint_occupied:
+    file: square.svg
+  check:
+    file: square.svg
+promotion:
+  fill:
+    r: 16
+    g: 17
+    b: 18
+  piece:
+    factor: 0.8
+  highlight:
+    fill:
+      r: 19
+      g: 20
+      b: 21
+annotation:
+  circle:
+    scale: 1.0
+    stroke: 0.1
+    primary:
+      r: 22
+      g: 23
+      b: 24
+    secondary:
+      r: 25
+      g: 26
+      b: 27
+    alternative:
+      r: 28
+      g: 29
+      b: 30
+  arrow:
+    shaft: 0.12
+    head:
+      length: 0.18
+      width: 0.2
+    primary:
+      r: 31
+      g: 32
+      b: 33
+    secondary:
+      r: 34
+      g: 35
+      b: 36
+    alternative:
+      r: 37
+      g: 38
+      b: 39
+    hint:
+      primary:
+        r: 40
+        g: 41
+        b: 42
+      secondary:
+        r: 43
+        g: 44
+        b: 45
+      alternative:
+        r: 46
+        g: 47
+        b: 48

@@ -1,0 +1,164 @@
+#
+# Pieces:
+# Pieces are centered on squares.
+#
+# Border:
+# The board border size is calculated as a factor of the board's mean dimension: (width + height) / 2.
+#
+# Colors:
+# Colors are defined in RGBA format, where r, g, and b are the red, green, and blue components (0-255),
+# and optional a is the alpha (opacity) component (0-255).
+#
+
+# The color of the background.
+fill: { r: 0, g: 0, b: 0 } # 000000
+
+board:
+  # The color of board background and color border.
+  fill: { r: 33, g: 33, b: 33 } # 212121
+
+  border:
+    # The width of the border around the chess board, as a factor of the board size.
+    factor: 0.05
+
+  square:
+    light:
+      # The color of the light squares.
+      file: "images/board/light_square.svg"
+    dark:
+      # The color of the dark squares.
+      file: "images/board/dark_square.svg"
+
+  label:
+    # The labels settings for labels show in boarder.
+    border:
+      # The color of the labels in the border.
+      fill: { r: 255, g: 255, b: 255 } # FFFFFF
+      # The file path for the font used for the labels in the border.
+      font: fonts/border_label.ttf
+      margin:
+        # The margin of the labels in the border, as a factor of the board size.
+        factor: 0.25
+    # The labels settings for labels show in squares.
+    square:
+      # The file path for the font used for the labels in the squares.
+      font: fonts/square_label.ttf
+      # The labels size as a factor of the square label area.
+      factor: 0.11
+      light:
+        # The color of the labels in the light squares.
+        fill: { r: 177, g: 136, b: 97 } # B18861
+      dark:
+        # The color of the labels in the dark squares.
+        fill: { r: 238, g: 217, b: 180 } # EED9B4
+      margin:
+        # The margin of the labels in the squares, as a factor of the square size.
+        factor: 0.05
+
+piece:
+  # The size of the pieces, as a factor of the square size.
+  factor: 0.8
+
+  # The white pieces:
+  white:
+    # The file paths for the white pieces.
+    pawn:
+      file: images/pieces/wp.svg
+    knight:
+      file: images/pieces/wn.svg
+    bishop:
+      file: images/pieces/wb.svg
+    rook:
+      file: images/pieces/wr.svg
+    queen:
+      file: images/pieces/wq.svg
+    king:
+      file: images/pieces/wk.svg
+
+  # The black pieces:
+  black:
+    # The file paths for the black pieces.
+    pawn:
+      file: images/pieces/bp.svg
+    knight:
+      file: images/pieces/bn.svg
+    bishop:
+      file: images/pieces/bb.svg
+    rook:
+      file: images/pieces/br.svg
+    queen:
+      file: images/pieces/bq.svg
+    king:
+      file: images/pieces/bk.svg
+
+  # For dragging piece:
+  drag:
+    # The size of the dragged pieces, as a factor of the piece size.
+    factor: 1.1
+
+highlight:
+  last_move:
+    # The file path for the highlight used to indicate the last move.
+    file: images/highlights/last_move.svg
+  check:
+    # The file path for the highlight used to indicate a check.
+    file: images/highlights/check.svg
+  selected:
+    # The file path for the highlight used to indicate a selected square.
+    file: images/highlights/selected.svg
+  opponent_selected:
+    # The file path for the highlight used to indicate an opponent's selected square.
+    file: images/highlights/opponent_selected.svg
+  hint:
+    # The file path for the highlight used to indicate a hint.
+    file: images/highlights/hint.svg
+  pseudo_hint:
+    # The file path for the highlight used to indicate a pseudo-hint.
+    file: images/highlights/opponent_hint.svg
+  opponent_hint:
+    # The file path for the highlight used to indicate an opponent's hint.
+    file: images/highlights/hint.svg
+  opponent_pseudo_hint:
+    # The file path for the highlight used to indicate an opponent's pseudo-hint.
+    file: images/highlights/opponent_hint.svg
+  hint_occupied:
+    # The file path for the highlight used to indicate a hint on an occupied square.
+    file: images/highlights/hint_occupied.svg
+  pseudo_hint_occupied:
+    # The file path for the highlight used to indicate a pseudo-hint on an occupied square.
+    file: images/highlights/opponent_hint_occupied.svg
+  opponent_hint_occupied:
+    # The file path for the highlight used to indicate an opponent's hint on an occupied square.
+    file: images/highlights/hint_occupied.svg
+  opponent_pseudo_hint_occupied:
+    # The file path for the highlight used to indicate an opponent's pseudo-hint on an occupied square.
+    file: images/highlights/opponent_hint_occupied.svg
+
+promotion:
+  fill: { r: 107, g: 128, b: 86 } # 6B8056
+  piece:
+    # The size of the piece in the promotion menu, as a factor of the square size.
+    factor: 0.75
+  highlight:
+    # The color of the highlight used to indicate the selected piece in the promotion menu.
+    fill: { r: 214, g: 79, b: 0 } # D64F00
+
+annotation:
+  circle:
+    scale: 1.0
+    stroke: 0.08
+    primary: { r: 21, g: 120, b: 27, a: 230 } # 15781BE6
+    secondary: { r: 136, g: 32, b: 32, a: 230 } # 882020E6
+    alternative: { r: 0, g: 48, b: 136, a: 230 } # 003088E6
+  arrow:
+    shaft: 0.15
+    head:
+      length: 0.45
+      width: 0.45
+    primary: { r: 21, g: 120, b: 27, a: 230 } # 15781BE6
+    secondary: { r: 136, g: 32, b: 32, a: 230 } # 882020E6
+    alternative: { r: 0, g: 48, b: 136, a: 230 } # 003088E6
+    hint:
+      primary: { r: 0, g: 48, b: 136, a: 200 } # 003088C8
+      secondary: { r: 0, g: 48, b: 136, a: 180 } # 003088B4
+      alternative: { r: 0, g: 48, b: 136, a: 160 } # 003088A0
