@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Named constants for all 64 board squares.
+
 ### Fixed
 
 - Restored visible arrow shafts for short diagonal annotations.
