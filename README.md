@@ -75,7 +75,7 @@ directly.
 A runnable Qt example is available at
 [examples/qt_demo.py](https://github.com/Diblo/pychessview/blob/main/examples/qt_demo.py).
 
-![Chessboard preview](docs/assets/chessboard_preview.png)
+![Chessboard preview](https://media.githubusercontent.com/media/Diblo/pychessview/refs/heads/main/docs/assets/chessboard_preview.png)
 
 The Qt example supports these interactions:
 
