@@ -3,7 +3,3 @@ MD013:
   tables: false
 MD029:
   style: one
-
-overrides:
-  CHANGELOG.md:
-    MD024: false
