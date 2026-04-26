@@ -9,6 +9,12 @@ The project is published as a single PyPI distribution:
   interaction handling, themes, and the public view API
 - `pychessview.qt`: optional Qt integration module enabled through the `qt` extra
 
+## Requirements
+
+- Python 3.11 or newer
+- Core runtime dependencies installed automatically with `pychessview`
+- For Qt widget support, `PySide6` is required
+
 Install only the core package when no GUI backend is needed:
 
 ```shell
@@ -68,6 +74,14 @@ directly.
 
 A runnable Qt example is available at
 [examples/qt_demo.py](https://github.com/Diblo/pychessview/blob/main/examples/qt_demo.py).
+
+![Chessboard preview](docs/assets/chessboard_preview.png)
+
+The Qt example supports these interactions:
+
+- Use the left mouse button to select, move, and drag pieces.
+- Use Shift, Ctrl, or Alt with the left mouse button to add a circle or arrow.
+- Use the right mouse button to delete a circle or arrow.
 
 ## License
 

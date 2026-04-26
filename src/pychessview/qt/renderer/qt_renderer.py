@@ -5,7 +5,7 @@
 
 from __future__ import annotations
 
-from math import atan2, cos, degrees, hypot, sin
+from math import atan2, cos, hypot, sin
 from typing import TYPE_CHECKING
 
 from PySide6.QtCore import QPointF, QRectF, Qt
@@ -65,72 +65,72 @@ def _align_offset(align: HorizontalAlign | VerticalAlign | None, outer: float, i
     return 0.0
 
 
-def _build_arrow_geometry(
-    item: ArrowItem, points: tuple[Coord, Coord] | tuple[Coord, Coord, Coord]
-) -> tuple[QPainterPath, QPainterPath, QPainterPath]:
-    """Build Qt painter paths for an arrow render item.
+def _build_arrow(item: ArrowItem, points: tuple[Coord, Coord] | tuple[Coord, Coord, Coord]) -> QPainterPath:
+    """Build a Qt painter path for an arrow render item.
 
     Args:
         item: Arrow render item that defines the shaft and head dimensions.
         points: Arrow control points in painter coordinates.
 
     Returns:
-        Tuple containing the tail cap, shaft fill, and head paths for the arrow.
+        Painter path containing the complete arrow geometry.
     """
     qpoints = [QPointF(coord.x, coord.y) for coord in points]
 
     tip_point = qpoints[-1]
 
-    # shaft
+    # Shaft
     prev_shaft_point = qpoints[-2]
+
     delta_x = tip_point.x() - prev_shaft_point.x()
     delta_y = tip_point.y() - prev_shaft_point.y()
 
+    # angle of prev shaft point to tip point in radians,
+    # where 0 is pointing right and positive is counter-clockwise
     angle = atan2(delta_y, delta_x)
-    shaft_end_distance = max(0.0, hypot(delta_x, delta_y) - item.head_length)
+
+    # subtracts the length of the head from the length between prev shaft point and tip point
+    shaft_end_distance = max(0.0, hypot(delta_x, delta_y) - float(item.head_length))
+
+    # calculate the end point of the shaft based on the angle and distance from the prev shaft point
     shaft_end_point = QPointF(
-        prev_shaft_point.x() + shaft_end_distance * cos(angle), prev_shaft_point.y() + shaft_end_distance * sin(angle)
+        prev_shaft_point.x() + shaft_end_distance * cos(angle),
+        prev_shaft_point.y() + shaft_end_distance * sin(angle),
     )
 
-    shaft_points = [*qpoints[:-1], shaft_end_point]
-    shaft_path = QPainterPath(shaft_points[0])
-    for point in shaft_points[1:]:
-        shaft_path.lineTo(point)
+    # Create the shaft path
+    shaft_path = QPainterPath(qpoints[0])
+    if len(qpoints) == 3:
+        shaft_path.lineTo(qpoints[1])
+    shaft_path.lineTo(shaft_end_point)
 
+    # Create the strok path for the shaft, using the shaft path.
     stroker = QPainterPathStroker()
     stroker.setWidth(float(item.shaft_width))
-    stroker.setCapStyle(Qt.PenCapStyle.FlatCap)
-    shaft_fill_path = stroker.createStroke(shaft_path)
+    stroker.setCapStyle(Qt.PenCapStyle.RoundCap)
+    stroker.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
+    shaft_strok_path = stroker.createStroke(shaft_path)
 
-    # tail cap
-    start_shaft_point = shaft_points[0]
-    next_shaft_point = shaft_points[1]
-    shaft_radius = item.shaft_width / 2.0
-    tail_angle = atan2(next_shaft_point.y() - start_shaft_point.y(), next_shaft_point.x() - start_shaft_point.x())
-    tail_arc_rect = QRectF(
-        start_shaft_point.x() - shaft_radius, start_shaft_point.y() - shaft_radius, item.shaft_width, item.shaft_width
-    )
-    tail_cap_path = QPainterPath()
-    tail_start_angle = 90.0 - degrees(tail_angle)
-    tail_cap_path.arcMoveTo(tail_arc_rect, tail_start_angle)
-    tail_cap_path.arcTo(tail_arc_rect, tail_start_angle, 180.0)
-    tail_cap_path.closeSubpath()
+    # Head
+    head_half_width = float(item.head_width) / 2.0
+    head_length = float(item.head_length)
 
-    # head
-    head_width = item.head_width / 2.0
+    # Create a triangle for the head, by calculating the left and right points by walking back from the tip point along.
     left_point = QPointF(
-        tip_point.x() - item.head_length * cos(angle) + head_width * sin(angle),
-        tip_point.y() - item.head_length * sin(angle) - head_width * cos(angle),
+        tip_point.x() - head_length * cos(angle) + head_half_width * sin(angle),
+        tip_point.y() - head_length * sin(angle) - head_half_width * cos(angle),
     )
     right_point = QPointF(
-        tip_point.x() - item.head_length * cos(angle) - head_width * sin(angle),
-        tip_point.y() - item.head_length * sin(angle) + head_width * cos(angle),
+        tip_point.x() - head_length * cos(angle) - head_half_width * sin(angle),
+        tip_point.y() - head_length * sin(angle) + head_half_width * cos(angle),
     )
+
+    # Create the head path as a triangle between the tip point and the left and right points.
     head_path = QPainterPath()
     head_path.addPolygon(QPolygonF([tip_point, left_point, right_point]))
     head_path.closeSubpath()
 
-    return (tail_cap_path, shaft_fill_path, head_path)
+    return shaft_strok_path.united(head_path)
 
 
 class QtRenderer(RendererProtocol):
@@ -235,11 +235,10 @@ class QtRenderer(RendererProtocol):
             points: Arrow geometry points to draw.
         """
         painter = self._painter_adapter.require_painter()
-        tail_cap_path, shaft_path, head_path = _build_arrow_geometry(item, points)
 
         painter.setPen(Qt.PenStyle.NoPen)
         painter.setBrush(QColor(color.r, color.g, color.b, color.a))
-        painter.drawPath(tail_cap_path.united(shaft_path).united(head_path))
+        painter.drawPath(_build_arrow(item, points))
 
     def draw_text_ink(self, item: LabelItem) -> None:
         """Draw a text label item.

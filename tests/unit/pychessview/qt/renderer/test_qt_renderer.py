@@ -20,7 +20,7 @@ from pychessview.engine.render.items.label_item import LabelItem
 from pychessview.qt.renderer.qt_renderer import (
     QtRenderer,
     _align_offset,  # pyright: ignore[reportPrivateUsage]
-    _build_arrow_geometry,  # pyright: ignore[reportPrivateUsage]
+    _build_arrow,  # pyright: ignore[reportPrivateUsage]
 )
 
 from .._helpers import SpyRenderer, image_has_visible_pixel
@@ -41,21 +41,24 @@ def test_align_offset_handles_edges_center_and_oversized_content() -> None:
     assert _align_offset(HorizontalAlign.CENTER, 10.0, 20.0) == 0.0
 
 
-def test_build_arrow_geometry_returns_tail_shaft_and_head_paths() -> None:
-    """Build the three drawable path components for an arrow item.
+def test_build_arrow_geometry_returns_complete_arrow_path() -> None:
+    """Build one drawable path containing the complete arrow geometry.
 
-    The renderer draws arrows as separate tail cap, shaft, and head paths; this
-    test protects the geometry helper from returning empty paths for a normal
-    diagonal arrow.
+    The renderer fills a single path for arrows, so the geometry helper must
+    return visible geometry that spans the requested start and tip points for a
+    normal diagonal arrow.
     """
-    tail_cap_path, shaft_path, head_path = _build_arrow_geometry(
+    arrow_path = _build_arrow(
         ArrowItem(12, 24, 18),
         (Coord(10, 10), Coord(80, 50)),
     )
+    bounds = arrow_path.boundingRect()
 
-    assert tail_cap_path.isEmpty() is False
-    assert shaft_path.isEmpty() is False
-    assert head_path.isEmpty() is False
+    assert arrow_path.isEmpty() is False
+    assert bounds.left() <= 10
+    assert bounds.top() <= 10
+    assert bounds.right() >= 80
+    assert bounds.bottom() >= 50
 
 
 def test_qt_renderer_requires_painter_before_frame() -> None:
@@ -235,5 +238,7 @@ def test_draw_square_image_dispatches_svg_and_raster_assets() -> None:
     finally:
         painter.end()
 
+    assert renderer.svg_calls == [(Path("piece.svg"), (0.0, 0.0, 100.0, 100.0))]
+    assert renderer.raster_calls == [(Path("piece.png"), (0.0, 0.0, 100.0, 100.0))]
     assert renderer.svg_calls == [(Path("piece.svg"), (0.0, 0.0, 100.0, 100.0))]
     assert renderer.raster_calls == [(Path("piece.png"), (0.0, 0.0, 100.0, 100.0))]
