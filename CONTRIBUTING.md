@@ -48,7 +48,7 @@ All commits **must pass pre-commit checks**.
 Run manually:
 
 ```bash
-python -m tools.devtools run pre-commit
+python -m tools.devtools run pre-commit-all
 ```
 
 Notes:

@@ -30,7 +30,7 @@ jobs:
         run: python -m tools.devtools bootstrap ci
 
       - name: Run pre-commit hooks
-        run: python -m tools.devtools run pre-commit
+        run: python -m tools.devtools run pre-commit-all
 
   tests:
     name: Tests
