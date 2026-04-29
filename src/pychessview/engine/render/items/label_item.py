@@ -57,6 +57,9 @@ class LabelItem(Item):
             text: Text value to store or display.
             color: Color value associated with the object or operation.
             size: Size value used for layout or rendering.
+            font: Optional font path used for text rendering.
+            v_align: Optional vertical alignment for the rendered label.
+            h_align: Optional horizontal alignment for the rendered label.
         """
         self.rect = rect
         self.text = text

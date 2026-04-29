@@ -62,6 +62,15 @@ class ChessboardWidget(QWidget):
 
         Args:
             parent: Optional parent object used by the surrounding framework.
+            game_spec: Game specification used to initialize the underlying view.
+            player: Player color whose perspective controls interaction and board orientation.
+            default_fen: Optional FEN string used to initialize the game state.
+            white_promotion_pieces: Optional promotion choices available to white.
+            black_promotion_pieces: Optional promotion choices available to black.
+            game_session_class: Optional game session implementation override.
+            interaction_session_class: Optional interaction session implementation override.
+            annotation_session_class: Optional annotation session implementation override.
+            promotion_session_class: Optional promotion session implementation override.
         """
         super().__init__(parent)
         self.setMouseTracking(True)

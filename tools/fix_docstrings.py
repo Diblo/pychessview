@@ -27,13 +27,21 @@ SECTION_HEADERS: Final[frozenset[str]] = frozenset(
         "Yields:",
     }
 )
+"""Structured docstring section headers whose bodies should be normalized."""
 
 TRIPLE_QUOTE_PATTERN: Final[re.Pattern[str]] = re.compile(r"^([rRuUbBfF]*)(\"\"\"|''')")
+"""Pattern used to read string prefixes and triple-quote delimiters from docstrings."""
 
 
 @dataclass(frozen=True)
 class Replacement:
-    """Stores a line-based source replacement."""
+    """Stores a line-based source replacement.
+
+    Attributes:
+        start_line: Zero-based first line index replaced in the source file.
+        end_line: Zero-based exclusive end line index replaced in the source file.
+        lines: Replacement source lines.
+    """
 
     start_line: int
     end_line: int

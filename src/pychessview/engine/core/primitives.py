@@ -23,8 +23,8 @@ class PlayerColor(StrEnum):
     Attributes:
         WHITE: White player color.
         BLACK: Black player color.
-        TEXT: Text value associated with the enum member.
-        SYMBOL: Short symbol associated with the enum member.
+        text: Text value associated with the enum member.
+        symbol: Short symbol associated with the enum member.
     """
 
     WHITE = ("white", "w")
@@ -68,9 +68,9 @@ class PieceKind(StrEnum):
         BISHOP: Bishop piece kind.
         KNIGHT: Knight piece kind.
         PAWN: Pawn piece kind.
-        TEXT: Text value associated with the enum member.
-        SYMBOL: Short symbol associated with the enum member.
-        ORDER: Ordering value associated with the enum member.
+        text: Text value associated with the enum member.
+        symbol: Short symbol associated with the enum member.
+        order: Ordering value associated with the enum member.
     """
 
     KING = ("king", "k", 6)
@@ -222,7 +222,7 @@ class File(IntEnum):
         G: File G.
         H: File H.
         VALUE: Numeric value associated with the enum member.
-        TEXT: Text value associated with the enum member.
+        text: Text value associated with the enum member.
     """
 
     A = (0, "A")
@@ -299,7 +299,7 @@ class Rank(IntEnum):
         SEVEN: Rank seven.
         EIGHT: Rank eight.
         VALUE: Numeric value associated with the enum member.
-        TEXT: Text value associated with the enum member.
+        text: Text value associated with the enum member.
     """
 
     ONE = (0, "1")
