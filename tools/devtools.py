@@ -1293,7 +1293,7 @@ def main() -> int:
         description="Build and validate distribution artifacts.",
     )
 
-    def _dispatch_build() -> int:
+    def _dispatch_build(args: argparse.Namespace) -> int:
         """Dispatch the package build command.
 
         Args:
@@ -1302,6 +1302,7 @@ def main() -> int:
         Returns:
             Build command exit code.
         """
+        _ = args
         return build_package()
 
     build_parser.set_defaults(func=_dispatch_build)
@@ -1352,7 +1353,7 @@ def main() -> int:
         description="Remove Python cache and temp directories.",
     )
 
-    def _dispatch_clean() -> int:
+    def _dispatch_clean(args: argparse.Namespace) -> int:
         """Dispatch the Python cache cleanup command.
 
         Args:
@@ -1361,6 +1362,7 @@ def main() -> int:
         Returns:
             Cleanup command exit code.
         """
+        _ = args
         return clean_cache()
 
     clean_parser.set_defaults(func=_dispatch_clean)
