@@ -93,7 +93,7 @@ def _is_dict(value: object) -> TypeGuard[dict[Any, Any]]:
     return isinstance(value, dict)
 
 
-def _load_pyproject_data(dir: Path) -> dict[Any, Any]:
+def _load_pyproject_data(project_dir: Path) -> dict[Any, Any]:
     """Load the pyproject data from a directory.
 
     Args:
@@ -105,7 +105,7 @@ def _load_pyproject_data(dir: Path) -> dict[Any, Any]:
     Raises:
         RuntimeError: If the pyproject file is missing, invalid, or does not contain a top-level table.
     """
-    pyproject_path = dir / "pyproject.toml"
+    pyproject_path = project_dir / "pyproject.toml"
     if not pyproject_path.is_file():
         raise RuntimeError(f"pyproject.toml was not found at {pyproject_path}")
 
@@ -1293,7 +1293,7 @@ def main() -> int:
         description="Build and validate distribution artifacts.",
     )
 
-    def _dispatch_build(args: argparse.Namespace) -> int:
+    def _dispatch_build() -> int:
         """Dispatch the package build command.
 
         Args:
@@ -1352,7 +1352,7 @@ def main() -> int:
         description="Remove Python cache and temp directories.",
     )
 
-    def _dispatch_clean(args: argparse.Namespace) -> int:
+    def _dispatch_clean() -> int:
         """Dispatch the Python cache cleanup command.
 
         Args:
